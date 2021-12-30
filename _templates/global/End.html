@@ -1,0 +1,7 @@
+{% load otree %}
+<p>
+    {% if session.config.treatment_group != "control" %}
+    你是角色{{player.id_in_group}}，<br>
+    {% endif %}
+    你在游戏{{Constants.game_seq}}中的分数为 {{player.sum_payoff}}。
+</p>

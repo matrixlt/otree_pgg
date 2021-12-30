@@ -1,0 +1,55 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+<p>
+    请填写问卷调查：
+</p>
+
+<ol>
+    <li>
+        <p>
+        {% if session.config.treatment_group == "endowment" %}
+        如果你是角色1（初始分数为 {{ session.config.init_more }} 分），对方是角色2（初始分数为 {{ session.config.init_less }} 分）
+        {% else %}
+        如果你是角色1（每贡献 1 分，公共库增加 {{ session.config.unit_more }} 分），对方是角色2（每贡献 1 分，公共库增加 {{ session.config.unit_less }} 分）
+        {% endif %}
+        </p>
+        <ol type="i">
+            <li>
+                <p>请填写你认为的公平贡献方案：</p>
+                {{ formfield player.your_given_more label=your_given_more }}
+                {{ formfield player.other_given_more label=other_given_more }}
+            </li>
+            <li>
+                {{formfield player.bottom_line_more label=bottom_line }}
+            </li>
+        </ol>
+    </li>
+    <li>
+        <p>
+        {% if session.config.treatment_group == "endowment" %}
+        如果你是角色2（初始分数为 {{ session.config.init_less }} 分），对方是角色1（初始分数为 {{ session.config.init_more }} 分）
+        {% else %}
+        如果你是角色2（每贡献 1 分，公共库增加 {{ session.config.unit_less }} 分），对方是角色1（每贡献 1 分，公共库增加 {{ session.config.unit_more }} 分）
+        {% endif %}
+        </p>
+        <ol type="i">
+            <li>
+                <p>请填写你认为的公平贡献方案：</p>
+                {{formfield player.your_given_less label=your_given_less }}
+                {{formfield player.other_given_less label=other_given_less }}
+            </li>
+            <li>
+                {{formfield player.bottom_line_less label=bottom_line }}
+            </li>
+        </ol>
+    </li>
+</ol>
+
+{{ next_button }}
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% load otree %}
+
+<p>
+    游戏介绍
+</p>
+<ul>
+    {% if session.config.treatment_group == "control" %}
+
+    {% if Constants.game_seq == 1 %}
+    <li>
+        你与随机分配的一个玩家重复进行 {{Constants.num_rounds}} 轮游戏。
+    </li>
+    {% else %}
+    <li>
+        你与重新随机分配的一个玩家重复进行 {{Constants.num_rounds}} 轮游戏。
+    </li>
+    {% endif %}
+
+    <li>
+        你们的初始分数都为 {{ session.config.init_more }} 分。
+    </li>
+    <li>
+        每轮你们都将各自决定贡献多少分到公共库中，多少留在自己手中。
+    </li>
+    {% endif %}
+
+    {% if session.config.treatment_group == "endowment" %}
+
+    {% if Constants.game_seq == 1 %}
+    <li>
+        首轮你与随机分配的一个玩家被系统随机分配角色 1 和角色 2，你们将重复进行 {{Constants.num_rounds}} 轮游戏，期间角色不变。
+    </li>
+    {% else %}
+    <li>
+        你将改变角色，与系统重新随机分配的另一角色的玩家重复进行 {{Constants.num_rounds}} 轮游戏，期间角色不变。
+    </li>
+    {% endif %}
+
+    <li>
+        每轮角色 1 的初始分数为 {{ session.config.init_more }} 分，角色 2 的初始分数为 {{ session.config.init_less }} 分。
+    </li>
+    <li>
+        每轮你们都将各自决定贡献多少分到公共库中，多少留在自己手中。
+    </li>
+    {% endif %}
+
+    {% if session.config.treatment_group == "production" %}
+
+    {% if Constants.game_seq == 1 %}
+    <li>
+        首轮你与随机分配的一个玩家被系统随机分配角色 1 和角色 2，你们将重复进行 {{Constants.num_rounds}} 轮游戏，期间角色不变。
+    </li>
+    {% else %}
+    <li>
+        你将改变角色，与系统重新随机分配的另一角色的玩家重复进行 {{Constants.num_rounds}} 轮游戏，期间角色不变。
+    </li>
+    {% endif %}
+
+    <li>
+        每轮你们都会获得初始分数 {{ session.config.init_more }} 分，并各自决定将多少分贡献到公共库中，多少留在自己手中。
+    </li>
+    <li>
+        角色 1 每贡献 1 分，公共库增加 {{session.config.unit_more}} 分。角色 2 每贡献 1 分，公共库增加 {{session.config.unit_less}} 分。
+    </li>
+    {% endif %}
+
+    <li>
+        每轮如果公共库中的总分数大于等于 {{session.config.threshold}} 分，则你们都将获得额外的 {{session.config.profit}} 分；否则只获得手中的分数。
+    </li>
+</ul>

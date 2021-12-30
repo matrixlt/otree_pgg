@@ -1,0 +1,90 @@
+{% load otree %}
+<style>
+   table,
+   table tr th,
+   table tr td {
+      border: 1px solid;
+   }
+
+   /*选项区*/
+   #contribution {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      max-height: 300px;
+      text-align: initial;
+      align-content: space-around;
+   }
+
+   #form {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      text-align: center;
+   }
+
+   .form-check {
+      max-width: 80px;
+   }
+
+   thead {
+      line-height: 50px;
+   }
+
+   thead th:nth-child(2) {
+      min-width: 400px;
+   }
+</style>
+<p>当前轮次为 {{player.round_number}}，你在游戏{{Constants.game_seq}}中的累积分数为 {{player.sum_payoff}}。</p>
+
+<table>
+   <thead>
+      <tr>
+         <th colspan="3">上轮贡献与分数</td>
+         <th>本轮贡献</td>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td></td>
+         <td>贡献</td>
+         <td>分数</td>
+         <td rowspan="4">
+            {{include "global/Form.html"}}
+         </td>
+      </tr>
+      {% if player.round_number != 1 %}
+      <tr>
+         <td>你</td>
+         <td>{{player.my_choice}}</td>
+         <td>{{player.my_payoff}}</td>
+      </tr>
+      <tr>
+         <td>对方</td>
+         <td>{{player.other_choice}}</td>
+         <td>{{player.other_payoff}}</td>
+      </tr>
+      <tr>
+         <td colspan="3">
+            <p>{{group.is_successful}}</p>
+         </td>
+      </tr>
+      {% else %}
+      <tr>
+         <td>你</td>
+         <td>-- 分</td>
+         <td>-- 分</td>
+      </tr>
+      <tr>
+         <td>对方</td>
+         <td>-- 分</td>
+         <td>-- 分</td>
+      </tr>
+      <tr>
+         <td colspan="3">
+            <p>上一轮公共库中总分数为 -- 分，--达到目标值。</p>
+         </td>
+      </tr>
+      {% endif %}
+   </tbody>
+</table>

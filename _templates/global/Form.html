@@ -1,0 +1,26 @@
+{% load otree %}
+<style>
+
+</style>
+<div>
+{% if player.id_in_group == 1 %}
+<p class="text1">
+   {% if session.config.treatment_group != "control" %}
+   你是角色{{player.id_in_group}}，
+   {% endif %}
+   初始分数为 {{session.config.init_more}} 分。
+</p>
+{% else %}
+<p class="text1">
+   {% if session.config.treatment_group != "control" %}
+   你是角色{{player.id_in_group}}，
+   {% endif %}
+   初始分数为 {{session.config.init_less}} 分。
+</p>
+{% endif %}
+
+{% formfield player.contribution label="请你选择本轮贡献到公共库的分数"%}
+<button type="submit" class="otree-btn-next btn btn-primary">
+   确定
+</button>
+<div>

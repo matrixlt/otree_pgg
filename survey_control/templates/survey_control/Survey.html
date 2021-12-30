@@ -1,0 +1,26 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+<p>
+    请填写问卷调查：
+</p>
+
+
+<ol>
+    <li>
+        <p>请填写你认为的公平贡献方案：</p>
+        {{ formfield player.your_given_more label=your_given_more }}
+        {{ formfield player.other_given_more label=other_given_more }}
+    </li>
+    <li>
+        {{formfield player.bottom_line_more label=bottom_line }}
+    </li>
+</ol>
+
+{{ next_button }}
+
+{% endblock %}
