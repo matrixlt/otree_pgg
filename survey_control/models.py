@@ -42,7 +42,7 @@ class Player(BasePlayer):
         number_points2 = int(participant.sum_points2)
         total_points = participant.sum_points1 + participant.sum_points2
         result = "你在游戏1中的分数为 {}，<br>在游戏2中的分数为 {}，<br>最终分数为 {}+{}={}，<br>最终报酬为 25+0.03*{}={}。".format(
-            str(participant.sum_points1),str(participant.sum_points2),
-            str(number_points1), str(number_points2), str(total_points),
-            str(int(total_points)),str(participant.payoff_plus_participation_fee()))
+            participant.sum_points1, participant.sum_points2,
+            number_points1, number_points2, total_points,
+            int(total_points), participant.payoff_plus_participation_fee())
         return result

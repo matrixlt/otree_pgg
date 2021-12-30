@@ -1,4 +1,3 @@
-
 from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range, Page, WaitPage
@@ -15,6 +14,7 @@ class Constants(BaseConstants):
     game_seq = 1
 
 
+# randomly group at first round
 class Subsession(BaseSubsession):
     def creating_session(self):
         if self.round_number == 1:
@@ -29,17 +29,13 @@ class Group(BaseGroup):
     def set_payoffs(self):
         p1 = self.get_player_by_id(1)
         p2 = self.get_player_by_id(2)
-        profit = 0
-        if self.session.config["treatment_group"] == "production":
-            from decimal import Decimal
-            public_points = Decimal(p1.contribution)*Decimal(self.session.config["unit_more"]) + Decimal(
-                p2.contribution)*Decimal(self.session.config["unit_less"])
-        else:
-            public_points = p1.contribution * \
-                self.session.config["unit_more"] + \
-                p2.contribution*self.session.config["unit_less"]
+        public_points = p1.contribution*self.session.config["unit_more"] + \
+            p2.contribution*self.session.config["unit_less"]
+
         if public_points >= self.session.config["threshold"]:
             profit = self.session.config["profit"]
+        else:
+            profit = 0
         p1.payoff = self.session.config["init_more"] - p1.contribution + profit
         p2.payoff = self.session.config["init_less"] - p2.contribution + profit
         if self.round_number == Constants.num_rounds:
@@ -49,21 +45,13 @@ class Group(BaseGroup):
     def is_successful(self):
         p1 = self.in_round(self.round_number - 1).get_player_by_id(1)
         p2 = self.in_round(self.round_number - 1).get_player_by_id(2)
-        if self.session.config["treatment_group"] == "production":
-            from decimal import Decimal
-            public_points = Decimal(p1.contribution)*Decimal(self.session.config["unit_more"]) + Decimal(
-                p2.contribution)*Decimal(self.session.config["unit_less"])
-        else:
-            public_points = p1.contribution * self.session.config["unit_more"] + \
-                p2.contribution*self.session.config["unit_less"]
-    
-        result = str(public_points)
-        if result[-1] != "分":
-            result += " 分"
+        public_points = p1.contribution * self.session.config["unit_more"] + \
+            p2.contribution*self.session.config["unit_less"]
+
         if public_points >= self.session.config["threshold"]:
-            return "上一轮公共库中总分数为 {}，已达到目标值。".format(result)
+            return "上一轮公共库中总分数为 {}，已达到目标值。".format(public_points)
         else:
-            return "上一轮公共库中总分数为 {}，未达到目标值。".format(result)
+            return "上一轮公共库中总分数为 {}，未达到目标值。".format(public_points)
 
 
 class Player(BasePlayer):
