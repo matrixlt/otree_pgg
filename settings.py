@@ -55,7 +55,9 @@ DEMO_PAGE_INTRO_HTML = ''
 PARTICIPANT_FIELDS = ['sum_points1', 'sum_points2', 'role']
 SESSION_FIELDS = []
 ROOMS = [dict(name='lab', display_name='lab',
-              participant_label_file='_rooms/lab.txt')]
+              participant_label_file='_rooms/lab.txt'),
+        dict(name="test", display_name="test",
+        participant_label_file='_rooms/test.txt')]
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable

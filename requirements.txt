@@ -4,5 +4,3 @@
 otree>=5.1.3
 psycopg2>=2.8.4
 sentry-sdk>=0.7.9
-requests>=2.25
-ws4py>=0.5
